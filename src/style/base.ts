@@ -1,15 +1,12 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-mixed-operators */
 import styled from "styled-components";
+import{baseType, divType,buttonType} from './type'
+const setKey = (props: baseType, key: string,style=baseStyle) => {
+  return props[key] ? props[key] : style[key];
+};
 
-interface BaseProps {
-  fontsize?: String;
-  color?: string;
-  margin?: string;
-  padding?: string;
-  [propName: string]: any;
-}
-let TextObj: BaseProps = {
+let baseStyle: baseType = {
   fontsize: "14px",
   margin: "0px",
   color: "black",
@@ -17,20 +14,50 @@ let TextObj: BaseProps = {
   width: "max-content",
   height: "auto",
 };
-
-const setKey = (props: BaseProps, key: string) => {
-  return props[key] ? props[key] : TextObj[key];
-};
-
-export const Pnormal = styled.p<BaseProps>`
+let divstyle:divType = {
+  ...baseStyle,
+  padding:'2px',
+  display:"block",
+  borderRudis:'2px',
+  backGround:'white'
+}
+// const baseProps = `
+// width: ${(props:any) => setKey(props, "width")};
+// height: ${(props:any) => setKey(props, "height")};
+// font-size: ${(props:any) => setKey(props, "fontsize")};
+// margin: ${(props:any) => (props.margin ? props.margin : baseStyle.margin)};
+// padding: ${(props:any) => setKey(props, "padding")};
+// color: ${(props:any) => setKey(props, "color")};
+// `
+export const Pstyle = styled.p<baseType>`
+width: ${(props:any) => setKey(props, "width")};
+height: ${(props:any) => setKey(props, "height")};
+font-size: ${(props:any) => setKey(props, "fontsize")};
+margin: ${(props:any) => (props.margin ? props.margin : baseStyle.margin)};
+padding: ${(props:any) => setKey(props, "padding")};
+color: ${(props:any) => setKey(props, "color")};
+`
+export const Divstyle = styled.div<divType>`
   width: ${(props) => setKey(props, "width")};
   height: ${(props) => setKey(props, "height")};
   font-size: ${(props) => setKey(props, "fontsize")};
-  margin: ${(props) => (props.margin ? props.margin : TextObj.margin)};
-  padding: ${(props) => setKey(props, "padding")};
+  margin: ${(props) => (props.margin ? props.margin : baseStyle.margin)};
+  padding: ${(props) => setKey(props, "padding",divstyle)};
   color: ${(props) => setKey(props, "color")};
+  display:${(props) => setKey(props, "display",divstyle)};
+  border-radius:${(props) => setKey(props, "borderRudis",divstyle)};
+  background:${(props) => setKey(props, "backGround",divstyle)};
 `;
+
+export const ButtonStyle = styled.button<buttonType>`
+&:hover{
+  background: ${(props) => (props.btnType==='prim' ? '#61dafb':'gree')};
+}
+
+`
+
 // eslint-disable-next-line
 export default {
-  Pnormal,
+  Pstyle,
+  Divstyle
 };
